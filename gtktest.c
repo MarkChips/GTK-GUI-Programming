@@ -30,11 +30,11 @@ int main (int argc, char *argv[])
 	GtkWidget *btn2 = gtk_button_new_with_label ("Count button");
 	g_signal_connect (btn2, "clicked", G_CALLBACK (count_button), lbl);
 
-	GtkWidget *box = gtk_box_new (GTK_ORIENTATION_VERTICAL, 5);
-	gtk_box_pack_start (GTK_BOX (box), btn2, TRUE, TRUE, 0);
-	gtk_box_pack_start (GTK_BOX (box), lbl, TRUE, TRUE, 0);
-	gtk_box_pack_start (GTK_BOX (box), btn, TRUE, TRUE, 0);
-	gtk_container_add (GTK_CONTAINER (win), box);
+	GtkWidget *grd = gtk_grid_new ();
+	gtk_grid_attach (GTK_GRID (grd), lbl, 0, 0, 1, 1);
+	gtk_grid_attach (GTK_GRID (grd), btn2, 1, 0, 1, 1);
+	gtk_grid_attach (GTK_GRID (grd), btn, 0, 1, 2, 1);
+	gtk_container_add (GTK_CONTAINER (win), grd);
 	gtk_widget_show_all (win);
 	gtk_main ();
 	return 0;
