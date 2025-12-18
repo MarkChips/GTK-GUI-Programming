@@ -37,7 +37,8 @@ int main (int argc, char *argv[])
 	GtkWidget *btn2 = gtk_button_new_with_label ("Copy button");
 	g_signal_connect (btn2, "clicked", G_CALLBACK (copy_text), lbl);
 
-	txt = gtk_entry_new ();
+	GtkAdjustment *adj = gtk_adjustment_new (0, -10, 10, 1, 0, 0);
+	txt = gtk_spin_button_new (adj, 0, 0);
 
 	GtkWidget *grd = gtk_grid_new ();
 	gtk_grid_attach (GTK_GRID (grd), lbl, 0, 0, 1, 1);
