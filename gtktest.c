@@ -31,9 +31,9 @@ void count_button (GtkWidget *wid, gpointer ptr)
 void combo_changed (GtkWidget *wid, gpointer ptr)
 {
 	int sel = gtk_combo_box_get_active (GTK_COMBO_BOX (wid));
-	char *selected = gtk_combo_box_text_get_active_text (
-		GTK_COMBO_BOX_TEXT (wid));
-	printf ("The value of the combo is %d %s\n", sel, selected);
+	//~ char *selected = gtk_combo_box_text_get_active_text (
+		//~ GTK_COMBO_BOX_TEXT (wid));
+	printf ("The value of the combo is %d\n", sel);
 }
 
 int main (int argc, char *argv[])
@@ -52,14 +52,23 @@ int main (int argc, char *argv[])
 	GSList *group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (rad1));
 	GtkWidget *rad2 = gtk_radio_button_new_with_label (group, "Button 2");
 
-	GtkWidget *comb = gtk_combo_box_text_new ();
+	int pos = 0;
 
-	gtk_combo_box_text_append_text (GTK_COMBO_BOX_TEXT (comb),
-		"Option 1");
-	gtk_combo_box_text_append_text (GTK_COMBO_BOX_TEXT (comb),
-		"Option 2");
-	gtk_combo_box_text_append_text (GTK_COMBO_BOX_TEXT (comb),
-		"Option 3");
+	GtkListStore *ls = gtk_list_store_new (1, G_TYPE_STRING);
+	gtk_list_store_insert_with_values (ls, NULL, pos++, 0,
+		"Option 1", -1);
+	gtk_list_store_insert_with_values (ls, NULL, pos++, 0,
+		"Option 2", -1);
+	gtk_list_store_insert_with_values (ls, NULL, pos++, 0,
+		"Option 3", -1);
+
+	GtkWidget *comb = gtk_combo_box_new_with_model (GTK_TREE_MODEL (ls));
+
+	GtkCellRenderer *rend = gtk_cell_renderer_text_new ();
+
+	gtk_cell_layout_pack_start (GTK_CELL_LAYOUT (comb), rend, FALSE);
+	gtk_cell_layout_add_attribute (GTK_CELL_LAYOUT (comb), rend,
+		"text", 0);
 
 	gtk_combo_box_set_active (GTK_COMBO_BOX (comb), 0);
 	g_signal_connect (comb, "changed", G_CALLBACK (combo_changed), NULL);
