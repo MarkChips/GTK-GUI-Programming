@@ -31,8 +31,6 @@ void count_button (GtkWidget *wid, gpointer ptr)
 void combo_changed (GtkWidget *wid, gpointer ptr)
 {
 	int sel = gtk_combo_box_get_active (GTK_COMBO_BOX (wid));
-	//~ char *selected = gtk_combo_box_text_get_active_text (
-		//~ GTK_COMBO_BOX_TEXT (wid));
 	printf ("The value of the combo is %d\n", sel);
 }
 
@@ -62,7 +60,14 @@ int main (int argc, char *argv[])
 	gtk_list_store_insert_with_values (ls, NULL, pos++, 0,
 		"Option 3", -1);
 
-	GtkWidget *comb = gtk_combo_box_new_with_model (GTK_TREE_MODEL (ls));
+	GtkTreeModelSort *sorted = GTK_TREE_MODEL_SORT (
+		gtk_tree_model_sort_new_with_model (GTK_TREE_MODEL (ls)));
+
+	gtk_tree_sortable_set_sort_column_id (
+		GTK_TREE_SORTABLE (sorted), 0, GTK_SORT_ASCENDING);
+
+	GtkWidget *comb = gtk_combo_box_new_with_model (
+		GTK_TREE_MODEL (sorted));
 
 	GtkCellRenderer *rend = gtk_cell_renderer_text_new ();
 
