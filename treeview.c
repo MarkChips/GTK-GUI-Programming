@@ -5,6 +5,21 @@ void end_program (GtkWidget *wid, gpointer ptr)
 	gtk_main_quit ();
 }
 
+void row_selected (GtkWidget *wid, gpointer ptr)
+{
+	GtkTreeSelection *sel;
+	GtkTreeModel *model;
+	GtkTreeIter iter;
+	char *option;
+
+	sel = gtk_tree_view_get_selection (GTK_TREE_VIEW (wid));
+	if (gtk_tree_selection_get_selected (sel, &model, &iter))
+	{
+		gtk_tree_model_get (model, &iter, 0, &option, -1);
+		printf ("The selected row contains the text %s\n", option);
+	}
+}
+
 int main (int argc, char *argv[])
 {
 	gtk_init (&argc, &argv);
@@ -37,6 +52,9 @@ int main (int argc, char *argv[])
 		GTK_TREE_VIEW (tv), -1, "Icon", prend, "pixbuf", 1, NULL);
 	gtk_tree_view_insert_column_with_attributes (
 		GTK_TREE_VIEW (tv), -1, "Option", trend, "text", 0, NULL);
+
+	g_signal_connect (
+		tv, "cursor-changed", G_CALLBACK (row_selected), NULL);
 
 	GtkWidget *grd = gtk_grid_new ();
 	gtk_grid_attach (GTK_GRID (grd), tv, 0, 0, 1, 1);
