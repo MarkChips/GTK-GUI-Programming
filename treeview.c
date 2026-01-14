@@ -29,6 +29,13 @@ void open_dialog (GtkWidget *wid, gpointer ptr)
 		"Cancel", 0, "OK", 1, NULL
 	);
 
+	GtkWidget *lbl = gtk_label_new ("A question for the user");
+
+	gtk_container_add (
+		GTK_CONTAINER (gtk_dialog_get_content_area (GTK_DIALOG (dlg))),
+		lbl);
+	gtk_widget_show (lbl);
+
 	int result = gtk_dialog_run (GTK_DIALOG (dlg));
 	gtk_widget_destroy (dlg);
 	printf ("Return code = %d\n", result);
