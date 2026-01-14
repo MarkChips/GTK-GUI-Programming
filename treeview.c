@@ -20,13 +20,27 @@ void row_selected (GtkWidget *wid, gpointer ptr)
 	}
 }
 
+void open_dialog (GtkWidget *wid, gpointer ptr)
+{
+	GtkWidget *dlg = gtk_dialog_new_with_buttons (
+		"My dialog",
+		GTK_WINDOW (ptr),
+		GTK_DIALOG_MODAL | GTK_DIALOG_DESTROY_WITH_PARENT,
+		"Cancel", 0, "OK", 1, NULL
+	);
+
+	int result = gtk_dialog_run (GTK_DIALOG (dlg));
+	gtk_widget_destroy (dlg);
+	printf ("Return code = %d\n", result);
+}
+
 int main (int argc, char *argv[])
 {
 	gtk_init (&argc, &argv);
 
 	GtkWidget *win = gtk_window_new (GTK_WINDOW_TOPLEVEL);
-	GtkWidget *btn = gtk_button_new_with_label ("Close window");
-	g_signal_connect (btn, "clicked", G_CALLBACK (end_program), NULL);
+	GtkWidget *btn = gtk_button_new_with_label ("Open modal");
+	g_signal_connect (btn, "clicked", G_CALLBACK (open_dialog), NULL);
 	g_signal_connect (win, "delete_event", G_CALLBACK (end_program),
 		NULL);
 
