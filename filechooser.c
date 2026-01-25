@@ -11,6 +11,20 @@ static void file_selected (GtkFileChooserButton *btn, gpointer ptr)
 		(GTK_FILE_CHOOSER (btn)));
 }
 
+static void save_file (GtkWidget *btn, gpointer ptr)
+{
+	GtkWidget *sch = gtk_file_chooser_dialog_new (
+		"Save file", GTK_WINDOW (ptr), GTK_FILE_CHOOSER_ACTION_SAVE,
+		"Cancel", 0, "OK", 1, NULL
+	);
+	if (gtk_dialog_run (GTK_DIALOG (sch)) == 1)
+	{
+		printf ("%s selected\n", gtk_file_chooser_get_filename
+			(GTK_FILE_CHOOSER (sch)));
+	}
+	gtk_widget_destroy (sch);
+}
+
 int main (int argc, char *argv[])
 {
 	gtk_init (&argc, &argv);
@@ -29,7 +43,11 @@ int main (int argc, char *argv[])
 	g_signal_connect (fc_btn, "file-set",
 		G_CALLBACK (file_selected), NULL);
 
+	GtkWidget *sf_btn = gtk_button_new_with_label ("Save file");
+	g_signal_connect (sf_btn, "clicked", G_CALLBACK (save_file), win);
+
 	gtk_box_pack_start (GTK_BOX (vbox), fc_btn, TRUE, TRUE, 0);
+	gtk_box_pack_start (GTK_BOX (vbox), sf_btn, TRUE, TRUE, 0);
 	gtk_box_pack_start (GTK_BOX (vbox), btn, TRUE, TRUE, 0);
 	gtk_widget_show_all (win);
 	gtk_main ();
