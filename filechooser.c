@@ -25,6 +25,14 @@ static void save_file (GtkWidget *btn, gpointer ptr)
 	gtk_widget_destroy (sch);
 }
 
+static void col_selected (GtkColorChooser *btn, gpointer ptr)
+{
+	GdkRGBA col;
+	gtk_color_chooser_get_rgba (btn, &col);
+	printf ("red = %f; green = %f; blue = %f\n",
+		col.red, col.green, col.blue);
+}
+
 int main (int argc, char *argv[])
 {
 	gtk_init (&argc, &argv);
@@ -46,8 +54,13 @@ int main (int argc, char *argv[])
 	GtkWidget *sf_btn = gtk_button_new_with_label ("Save file");
 	g_signal_connect (sf_btn, "clicked", G_CALLBACK (save_file), win);
 
+	GtkWidget *col_btn = gtk_color_button_new ();
+	g_signal_connect (
+		col_btn, "color-set", G_CALLBACK (col_selected), NULL);
+
 	gtk_box_pack_start (GTK_BOX (vbox), fc_btn, TRUE, TRUE, 0);
 	gtk_box_pack_start (GTK_BOX (vbox), sf_btn, TRUE, TRUE, 0);
+	gtk_box_pack_start (GTK_BOX (vbox), col_btn, TRUE, TRUE, 0);
 	gtk_box_pack_start (GTK_BOX (vbox), btn, TRUE, TRUE, 0);
 	gtk_widget_show_all (win);
 	gtk_main ();
