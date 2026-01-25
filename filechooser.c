@@ -33,6 +33,11 @@ static void col_selected (GtkColorChooser *btn, gpointer ptr)
 		col.red, col.green, col.blue);
 }
 
+static void fnt_selected (GtkFontChooser *btn, gpointer ptr)
+{
+	printf ("font = %s\n", gtk_font_chooser_get_font (btn));
+}
+
 int main (int argc, char *argv[])
 {
 	gtk_init (&argc, &argv);
@@ -58,9 +63,14 @@ int main (int argc, char *argv[])
 	g_signal_connect (
 		col_btn, "color-set", G_CALLBACK (col_selected), NULL);
 
+	GtkWidget *fnt_btn = gtk_font_button_new ();
+	g_signal_connect (
+		fnt_btn, "font-set", G_CALLBACK (fnt_selected), NULL);
+
 	gtk_box_pack_start (GTK_BOX (vbox), fc_btn, TRUE, TRUE, 0);
 	gtk_box_pack_start (GTK_BOX (vbox), sf_btn, TRUE, TRUE, 0);
 	gtk_box_pack_start (GTK_BOX (vbox), col_btn, TRUE, TRUE, 0);
+	gtk_box_pack_start (GTK_BOX (vbox), fnt_btn, TRUE, TRUE, 0);
 	gtk_box_pack_start (GTK_BOX (vbox), btn, TRUE, TRUE, 0);
 	gtk_widget_show_all (win);
 	gtk_main ();
