@@ -15,8 +15,8 @@ int main (int argc, char *argv[])
 	g_signal_connect (win, "delete_event", G_CALLBACK (end_program),
 		NULL);
 
-	GtkWidget *btn2 = gtk_button_new_with_label ("My button");
-	g_object_set (G_OBJECT (btn2), "relief", GTK_RELIEF_NONE, NULL);
+	GtkWidget *btn2 = gtk_button_new_with_label ("My_button");
+	g_object_set (G_OBJECT (btn2), "use-underline", TRUE, NULL);
 
 	GtkWidget *box = gtk_box_new (GTK_ORIENTATION_VERTICAL, 5);
 	gtk_box_pack_start (GTK_BOX (box), btn2, TRUE, TRUE, 0);
