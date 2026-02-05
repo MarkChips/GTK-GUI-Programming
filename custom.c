@@ -15,11 +15,11 @@ int main (int argc, char *argv[])
 	g_signal_connect (win, "delete_event", G_CALLBACK (end_program),
 		NULL);
 
-	GtkWidget *btn2 = gtk_button_new_with_label ("My_button");
-	g_object_set (G_OBJECT (btn2), "use-underline", TRUE, NULL);
+	GtkWidget *lbl = gtk_label_new ("My label");
+	g_object_set (G_OBJECT (lbl), "angle", 45.0, NULL);
 
 	GtkWidget *box = gtk_box_new (GTK_ORIENTATION_VERTICAL, 5);
-	gtk_box_pack_start (GTK_BOX (box), btn2, TRUE, TRUE, 0);
+	gtk_box_pack_start (GTK_BOX (box), lbl, TRUE, TRUE, 0);
 	gtk_box_pack_start (GTK_BOX (box), btn, TRUE, TRUE, 0);
 	gtk_container_add (GTK_CONTAINER (win), box);
 	gtk_widget_show_all (win);
