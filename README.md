@@ -7,7 +7,7 @@ This repository contains code samples and executables created by following along
 1. **Clone the Repository:**
    ```sh
    git clone https://github.com/MarkChips/GTK-GUI-Programming.git
-   cd C-Essentials
+   cd GTK-GUI-Programming
    ```
 
 2. **Running the Programs:**
@@ -17,9 +17,9 @@ This repository contains code samples and executables created by following along
    ```
    For example:
    ```sh
-   ./arrays
+   ./treeview
    ```
-   (This runs the compiled executable for the "arrays" chapter.)
+   (This runs the compiled executable for the "treeview" chapter.)
 
    > **Note:**  
    > If you see a "Permission denied" error, you may need to make the file executable:  
@@ -28,12 +28,12 @@ This repository contains code samples and executables created by following along
 3. **Compiling from Source (Optional):**
    If you want to modify the source code or rebuild a program:
    ```sh
-   gcc arrays.c -o arrays
+   gcc gtktest.c `pkg-config --cflags --libs gtk+-3.0` -o gtktest
    ```
-   Replace `arrays.c` with any of the source files you want to compile.  
+   Replace `gtktest.c` with any of the source files you want to compile.  
    Then run:
    ```sh
-   ./arrays
+   ./gtktest
    ```
 
 ## About
